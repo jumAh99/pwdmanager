@@ -1,4 +1,4 @@
-package com.passwordmanager.domain.validate;
+package com.passwordmanager.domain.valueObjects;
 
 public final class Properties {
     public static final int PWD_MIN_SIZE = 8;
