@@ -1,5 +1,6 @@
 package com.passwordmanager.domain.validate;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +26,8 @@ public final class Password {
         Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, sz,
                 "The value must be between %d and %d",
                 Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE);
-        password = pwd;
+        String p = DigestUtils.sha256Hex(pwd.toString()); // from apache commons -
+        password = p;
     }
 
     public void setPassword(String password) {

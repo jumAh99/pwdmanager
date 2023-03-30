@@ -31,13 +31,12 @@
         <div class="row d-flex">
           <div class="col-md-6 mt-2">
             <div class="search">
-              <i class="fa fa-search"></i>
               <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
                 placeholder="Enter keyword">
-              <button type="submit" class="btn btn-secondary">Search</button>
             </div>
           </div>
           <div class="col-md-6 mt-2">
+            <button type="submit" class="btn btn-secondary">Search</button>
             <button id="btnClear" class="btn btn-info">Clear</button>
           </div>
           <!-- MAIN FORM -->
@@ -49,6 +48,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Password</th>
                 <th scope="col">Website Name</th>
+                <th scope="col">Date Created</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -58,6 +58,7 @@
                 <td>[[${user.name}]]</td>
                 <td>[[${user.password}]]</td>
                 <td>[[${user.websiteName}]]</td>
+                <td>[[${user.creationDate}]]</td>
                 <td>
                   <a th:href="@{'/users/' + ${user.id}}" title="Edit this User"
                     class="fa-regular fa-pen-to-square icon-dark"></a>

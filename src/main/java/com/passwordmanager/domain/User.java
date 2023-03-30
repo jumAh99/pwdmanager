@@ -10,12 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 //DEFINE MAIN ENTITY
 @Entity
 @Table(name = "users")
 public class User {
+
     /**
      * IDENTIFIABLE UNIT TO DISTINGUISH
      * USERS FROM ONE ANOTHER
@@ -38,6 +45,12 @@ public class User {
     @Column(name = "password", nullable = false)
     @Convert(converter = PasswordAttributeConverter.class)
     private Password password;
+    /**
+     * WHEN THE PASSWORD WAS CREATED
+     */
+    @Column(name = "creationDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime creationDate;
 
     /**
      * THE WEBSITE NAME
@@ -53,9 +66,11 @@ public class User {
         this.name = name;
         this.password = password;
         this.websiteName = websiteName;
+        this.creationDate = LocalDateTime.now();
     }
 
     public User() {
+        this.creationDate = LocalDateTime.now();
     }
 
     public int getId() {
@@ -88,6 +103,15 @@ public class User {
 
     public void setWebsiteName(String websiteName) {
         this.websiteName = websiteName;
+    }
+
+    public String getCreationDate() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return creationDate.format(format);
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override
@@ -132,6 +156,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", password=" + password + ", websiteName=" + websiteName + "]";
+        return "User [id=" + id + ", name=" + name + ", password=" + password + ", creationDate=" + creationDate
+                + ", websiteName=" + websiteName + "]";
     }
 }
