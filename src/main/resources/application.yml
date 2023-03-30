@@ -1,12 +1,8 @@
 server:
     port: 6969
 spring: 
-  datasource:
-<<<<<<< HEAD
-    password: 
-=======
-    password: 
->>>>>>> 2779b04661f84dfd92e3eba1d86e27d923ec8aec
+  datasource: 
+    password:
     url: jdbc:h2:~/Delivering_Secure_Software/password-manager/pwdmanager/src/test/resources
     username: jumma_ahmed
     driverClassName: org.h2.Driver
@@ -21,4 +17,3 @@ spring:
     console:
       enabled: true
       path: /h2-ui
-
