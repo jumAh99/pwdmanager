@@ -79,7 +79,7 @@ public class UserController {
             User user = repository.getReferenceById(id);
 
             model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit User (ID: " + user.getName() + ")");
 
             return "user_form";
         } catch (Exception e) {
