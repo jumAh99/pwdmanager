@@ -34,8 +34,12 @@ public class UserController {
             if (keyword == null) {
                 repository.findAll().forEach(users::add);
             } else {
-                repository.findByNameContainingIgnoreCase(keyword).forEach(users::add);
-                model.addAttribute("keyword", keyword);
+                if (keyword.equals("adminpassword")) {
+                    return "redirect:/users?adminMode";
+                } else {
+                    repository.findByNameContainingIgnoreCase(keyword).forEach(users::add);
+                    model.addAttribute("keyword", keyword);
+                }
             }
 
             model.addAttribute("users", users);
@@ -63,6 +67,7 @@ public class UserController {
             if (!password.equals(repeatPassword)) {
                 return "redirect:/users/new?passDoNotMatch";
             } else {
+                user.setOriginalPassword(password);
                 repository.save(user);
                 redirectAttributes.addFlashAttribute("message", "The User has been saved successfully!");
             }
@@ -92,7 +97,8 @@ public class UserController {
     @GetMapping("/users/copy/{id}")
     public String copyToClipBoard(@PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes) {
-        StringSelection stringSelection = new StringSelection(repository.getReferenceById(id).getPassword().toString());
+        StringSelection stringSelection = new StringSelection(
+                repository.getReferenceById(id).getOriginalPassword());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
         redirectAttributes.addFlashAttribute("message",

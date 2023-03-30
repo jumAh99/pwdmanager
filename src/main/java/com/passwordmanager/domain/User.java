@@ -45,6 +45,10 @@ public class User {
     @Column(name = "password", nullable = false)
     @Convert(converter = PasswordAttributeConverter.class)
     private Password password;
+
+    @Column(name = "originalPassword")
+    private String originalPassword;
+
     /**
      * WHEN THE PASSWORD WAS CREATED
      */
@@ -71,6 +75,14 @@ public class User {
 
     public User() {
         this.creationDate = LocalDateTime.now();
+    }
+
+    public String getOriginalPassword() {
+        return originalPassword;
+    }
+
+    public void setOriginalPassword(String originalPassword) {
+        this.originalPassword = originalPassword;
     }
 
     public int getId() {

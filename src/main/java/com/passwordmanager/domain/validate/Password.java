@@ -26,7 +26,7 @@ public final class Password {
         Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, sz,
                 "The value must be between %d and %d",
                 Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE);
-        String p = DigestUtils.sha256Hex(pwd.toString()); // from apache commons -
+        String p = DigestUtils.sha256Hex(pwd.toString() + generateRandomPasswordSalt()); // from apache commons -
         password = p;
     }
 
@@ -36,6 +36,10 @@ public final class Password {
 
     public String getPassword() {
         return password;
+    }
+
+    private String generateRandomPasswordSalt() {
+        return DigestUtils.sha256Hex(String.valueOf(System.nanoTime()));
     }
 
     @Override
@@ -57,5 +61,4 @@ public final class Password {
     public String toString() {
         return password;
     }
-
 }

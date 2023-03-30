@@ -49,6 +49,9 @@
                 <th scope="col">Password</th>
                 <th scope="col">Website Name</th>
                 <th scope="col">Date Created</th>
+                <div th:if="${param.adminMode}">
+                  <th scope="col">Original Password</th>
+                </div>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -59,6 +62,9 @@
                 <td>[[${user.password}]]</td>
                 <td>[[${user.websiteName}]]</td>
                 <td>[[${user.creationDate}]]</td>
+                <div th:if="${param.adminMode}">
+                  <td>[[${user.originalPassword}]]</td>
+                </div>
                 <td>
                   <a th:href="@{'/users/' + ${user.id}}" title="Edit this User"
                     class="fa-regular fa-pen-to-square icon-dark"></a>
