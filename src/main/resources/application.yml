@@ -3,7 +3,7 @@ server:
 spring: 
   datasource:
 <<<<<<< HEAD
-    password:
+    password: 
 =======
     password: 
 >>>>>>> 2779b04661f84dfd92e3eba1d86e27d923ec8aec
