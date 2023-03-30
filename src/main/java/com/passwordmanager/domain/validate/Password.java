@@ -1,0 +1,59 @@
+package com.passwordmanager.domain.validate;
+
+import org.apache.commons.lang3.Validate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public final class Password {
+    private String password;
+    private static Logger logger = LogManager.getLogger(Password.class);
+
+    public Password() {
+    }
+
+    /**
+     * @param p CREATE A PASSWORD
+     */
+    public Password(String p) {
+        Validate.notNull(p);
+        checkInvariants(p);
+    }
+
+    private void checkInvariants(String pwd) {
+        Validate.notNull(pwd);
+        int sz = pwd.length();
+        Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, sz,
+                "The value must be between %d and %d",
+                Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE);
+        password = pwd;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Password that = (Password) o;
+        return password.equals(that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return password.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return password;
+    }
+
+}
