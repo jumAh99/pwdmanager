@@ -97,8 +97,7 @@ public class UserController {
     @GetMapping("/users/copy/{id}")
     public String copyToClipBoard(@PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes) {
-        StringSelection stringSelection = new StringSelection(
-                repository.getReferenceById(id).getOriginalPassword());
+        StringSelection stringSelection = new StringSelection(repository.getReferenceById(id).getPassword().toString());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
         redirectAttributes.addFlashAttribute("message",
