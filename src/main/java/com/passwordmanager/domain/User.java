@@ -1,7 +1,11 @@
 package com.passwordmanager.domain;
 
 import com.passwordmanager.domain.converters.PasswordAttributeConverter;
+import com.passwordmanager.domain.converters.UsernameAttributeConverter;
+import com.passwordmanager.domain.converters.WebpageNameAttributeConverter;
 import com.passwordmanager.domain.valueObjects.Password;
+import com.passwordmanager.domain.valueObjects.Username;
+import com.passwordmanager.domain.valueObjects.WebpageName;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -36,7 +40,8 @@ public class User {
      */
     @NotEmpty(message = "Username is mandatory")
     @Column(name = "name", nullable = false)
-    private String name;
+    @Convert(converter = UsernameAttributeConverter.class)
+    private Username username;
 
     /**
      * PASSWORD FOR A WEBSITE
@@ -61,20 +66,43 @@ public class User {
      */
     @NotEmpty(message = "WebsiteName is mandatory")
     @Column(name = "websiteName", nullable = false)
-    private String websiteName;
+    @Convert(converter = WebpageNameAttributeConverter.class)
+    private WebpageName websiteName;
 
-    public User(int id, @NotEmpty(message = "Username is mandatory") String name,
-            @NotEmpty(message = "Password is mandatory") Password password,
-            @NotEmpty(message = "WebsiteName is mandatory") String websiteName) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.websiteName = websiteName;
+    public User(Password p) {
+        this.password = p;
+        username = new Username();
+        websiteName = new WebpageName();
         this.creationDate = LocalDateTime.now();
     }
 
+    public User(WebpageName wbName) {
+        this.websiteName = wbName;
+        password = new Password();
+        username = new Username();
+        creationDate = LocalDateTime.now();
+    }
+
+    public User(Username username) {
+        this.username = username;
+        password = new Password();
+        websiteName = new WebpageName();
+        creationDate = LocalDateTime.now();
+    }
+
     public User() {
-        this.creationDate = LocalDateTime.now();
+        username = new Username();
+        password = new Password();
+        websiteName = new WebpageName();
+        creationDate = LocalDateTime.now();
+    }
+
+    public String getUsername() {
+        return this.username.getUsername();
+    }
+
+    public void setUsername(String username) {
+        this.username.setUsername(username);
     }
 
     public String getOriginalPassword() {
@@ -93,28 +121,20 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Password getPassword() {
-        return password;
-    }
-
-    public void setPassword(Password password) {
-        this.password = password;
-    }
-
-    public String getWebsiteName() {
+    public WebpageName getWebsiteName() {
         return websiteName;
     }
 
     public void setWebsiteName(String websiteName) {
-        this.websiteName = websiteName;
+        this.websiteName.setWebpageName(websiteName);
+    }
+
+    public void setPassword(String password) {
+        this.password.setPassword(password);
+    }
+
+    public String getPassword() {
+        return password.getPassword();
     }
 
     public String getCreationDate() {
@@ -124,51 +144,5 @@ public class User {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((websiteName == null) ? 0 : websiteName.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (id != other.id)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (websiteName == null) {
-            if (other.websiteName != null)
-                return false;
-        } else if (!websiteName.equals(other.websiteName))
-            return false;
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", password=" + password + ", creationDate=" + creationDate
-                + ", websiteName=" + websiteName + "]";
     }
 }

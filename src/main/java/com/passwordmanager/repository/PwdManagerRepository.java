@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.passwordmanager.domain.User;
 
-import jakarta.transaction.Transactional;
-
 @Repository
-@Transactional
 public interface PwdManagerRepository extends JpaRepository<User, Integer> {
     List<User> findByNameContainingIgnoreCase(String keyword);
 }
