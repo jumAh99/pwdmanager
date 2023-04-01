@@ -3,6 +3,8 @@ package com.passwordmanager.domain.vo;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.validation.Valid;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 public final class Password {
     private String password;
-    Matcher matcher;
+    private Matcher matcher;
     private static Logger logger = LogManager.getLogger(Password.class);
 
     public Password() {
@@ -29,6 +31,8 @@ public final class Password {
         Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, pwd.length(),
                 "The value must be between %d and %d",
                 Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE);
+        // Validate.isTrue(checkPasswordFormat(pwd), "Password must contain a capital,
+        // number and a special character");
         if (checkPasswordFormat(pwd)) {
             encryptPassword(pwd);
         }

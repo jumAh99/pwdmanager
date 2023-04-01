@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import com.passwordmanager.domain.User;
 import com.passwordmanager.domain.vo.Password;
+import com.passwordmanager.domain.vo.Username;
 import com.passwordmanager.domain.vo.WebpageName;
 
 public class UserTest {
@@ -18,15 +19,16 @@ public class UserTest {
 
     @Test
     public void itCreatesUserByName() {
-        User user = new User("jumma");
-        assertNotNull(user);
+        Username usernmae = new Username("Jumma");
+        User user = new User(usernmae);
+        assertNotNull(user.getUsername());
     }
 
     @Test
     public void itCreatesUserByPassword() {
-        Password p = new Password("password123");
+        Password p = new Password("Password@1209");
         User user = new User(p);
-        assertNotNull(user);
+        assertNotNull(user.getPassword());
     }
 
     @Test
@@ -34,7 +36,7 @@ public class UserTest {
         WebpageName wbName = new WebpageName("facebook.com");
 
         User user = new User(wbName);
-        assertNotNull(user);
+        assertNotNull(user.getWebsiteName());
     }
 
     @Test

@@ -11,7 +11,7 @@ public final class WebpageName {
     public WebpageName(String wbName) {
         Validate.notNull(wbName);
         int sz = wbName.length();
-        Validate.inclusiveBetween(0, 100, sz, "The value must be between 0 and 100 characters");
+        Validate.inclusiveBetween(5, 100, sz, "The value must be between 0 and 100 characters");
         webpageName = wbName;
     }
 

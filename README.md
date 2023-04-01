@@ -7,6 +7,7 @@
 1. Top left on your screen you will see two options 
 2. Select the option Add New Login
 3. Input the required information
+4. Note that password requires a capital letter, a number and a special character. 
 
 # How to copy login
 1. Go to Login List 
