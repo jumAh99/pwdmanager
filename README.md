@@ -18,7 +18,7 @@
 # How to delete a login
 1. Go to login list 
 2. Press on the icon that looks like a trash can 
-3. Done 
+3. Press yes in the pop-message box
 
 # How to Edit a login
 1. Go to login list 

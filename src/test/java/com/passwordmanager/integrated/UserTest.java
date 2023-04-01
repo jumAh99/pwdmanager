@@ -1,6 +1,7 @@
 package com.passwordmanager.integrated;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ public class UserTest {
 
     @Test
     public void itCreatesUserByPassword() {
-        Password p = new Password("Password12@");
+        Password p = new Password("password123");
         User user = new User(p);
         assertNotNull(user);
     }
@@ -34,6 +35,14 @@ public class UserTest {
 
         User user = new User(wbName);
         assertNotNull(user);
+    }
+
+    @Test
+    public void checkPasswordHash() {
+        Password password = new Password("Password12@30");
+        User user = new User(password);
+        user.setOriginalPassword(password.toString());
+        assertTrue(password.toString().equals(user.getOriginalPassword()));
     }
 
     @Test

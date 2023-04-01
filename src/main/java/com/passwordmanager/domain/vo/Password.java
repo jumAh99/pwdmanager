@@ -25,13 +25,13 @@ public final class Password {
     }
 
     private void checkInvariants(String pwd) {
-        Validate.notNull(pwd);
-        int sz = pwd.length();
-        Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, sz,
+        Validate.notNull(pwd, "Password is null!");
+        Validate.inclusiveBetween(Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE, pwd.length(),
                 "The value must be between %d and %d",
                 Properties.PWD_MIN_SIZE, Properties.PWD_MAX_SIZE);
-        String p = DigestUtils.sha256Hex(pwd.toString() + generateRandomPasswordSalt()); // from apache commons -
-        password = p;
+        if (checkPasswordFormat(pwd)) {
+            encryptPassword(pwd);
+        }
     }
 
     public void setPassword(String password) {
@@ -44,6 +44,20 @@ public final class Password {
 
     private String generateRandomPasswordSalt() {
         return DigestUtils.sha256Hex(String.valueOf(System.nanoTime()));
+    }
+
+    public String encryptPassword(String pwd) {
+        String p = DigestUtils.sha256Hex(pwd.toString() + generateRandomPasswordSalt());
+        return this.password = p;
+    }
+
+    public boolean checkPasswordFormat(String password) {
+        Pattern pattern = Pattern.compile(Properties.PASSWORD_FORMAT);
+        Matcher matcher = pattern.matcher(password);
+        if (password == null) {
+            return false;
+        }
+        return matcher.matches();
     }
 
     @Override
