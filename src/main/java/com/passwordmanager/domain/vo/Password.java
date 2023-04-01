@@ -1,4 +1,7 @@
-package com.passwordmanager.domain.valueObjects;
+package com.passwordmanager.domain.vo;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.Validate;
@@ -7,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 public final class Password {
     private String password;
+    Matcher matcher;
     private static Logger logger = LogManager.getLogger(Password.class);
 
     public Password() {

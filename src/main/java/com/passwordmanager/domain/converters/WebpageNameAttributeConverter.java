@@ -1,9 +1,9 @@
 package com.passwordmanager.domain.converters;
 
+import com.passwordmanager.domain.vo.WebpageName;
+
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
-import com.passwordmanager.domain.valueObjects.WebpageName;
 
 @Converter
 public class WebpageNameAttributeConverter implements AttributeConverter<WebpageName, String> {

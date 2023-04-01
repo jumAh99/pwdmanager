@@ -1,6 +1,7 @@
 package com.passwordmanager.domain.converters;
 
-import com.passwordmanager.domain.valueObjects.Password;
+import com.passwordmanager.domain.vo.Password;
+
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

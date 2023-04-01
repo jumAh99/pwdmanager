@@ -1,4 +1,4 @@
-package com.passwordmanager.domain.valueObjects;
+package com.passwordmanager.domain.vo;
 
 import org.apache.commons.lang3.Validate;
 

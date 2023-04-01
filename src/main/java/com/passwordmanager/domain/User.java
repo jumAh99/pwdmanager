@@ -1,11 +1,9 @@
 package com.passwordmanager.domain;
 
 import com.passwordmanager.domain.converters.PasswordAttributeConverter;
-import com.passwordmanager.domain.converters.UsernameAttributeConverter;
 import com.passwordmanager.domain.converters.WebpageNameAttributeConverter;
-import com.passwordmanager.domain.valueObjects.Password;
-import com.passwordmanager.domain.valueObjects.Username;
-import com.passwordmanager.domain.valueObjects.WebpageName;
+import com.passwordmanager.domain.vo.Password;
+import com.passwordmanager.domain.vo.WebpageName;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -34,14 +32,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     /**
      * USERNAME FOR A WEBSITE
      */
     @NotEmpty(message = "Username is mandatory")
-    @Column(name = "name", nullable = false)
-    @Convert(converter = UsernameAttributeConverter.class)
-    private Username username;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     /**
      * PASSWORD FOR A WEBSITE
@@ -69,9 +65,18 @@ public class User {
     @Convert(converter = WebpageNameAttributeConverter.class)
     private WebpageName websiteName;
 
+    public User(@NotEmpty(message = "Username is mandatory") String username,
+            @NotEmpty(message = "Password is mandatory") Password password,
+            @NotEmpty(message = "WebsiteName is mandatory") WebpageName websiteName) {
+        this.username = username;
+        this.password = password;
+        this.creationDate = LocalDateTime.now();
+        this.websiteName = websiteName;
+    }
+
     public User(Password p) {
         this.password = p;
-        username = new Username();
+        username = "";
         websiteName = new WebpageName();
         this.creationDate = LocalDateTime.now();
     }
@@ -79,11 +84,11 @@ public class User {
     public User(WebpageName wbName) {
         this.websiteName = wbName;
         password = new Password();
-        username = new Username();
+        username = "";
         creationDate = LocalDateTime.now();
     }
 
-    public User(Username username) {
+    public User(String username) {
         this.username = username;
         password = new Password();
         websiteName = new WebpageName();
@@ -91,18 +96,18 @@ public class User {
     }
 
     public User() {
-        username = new Username();
+        username = "";
         password = new Password();
         websiteName = new WebpageName();
         creationDate = LocalDateTime.now();
     }
 
     public String getUsername() {
-        return this.username.getUsername();
+        return this.username;
     }
 
     public void setUsername(String username) {
-        this.username.setUsername(username);
+        this.username = username;
     }
 
     public String getOriginalPassword() {
@@ -125,8 +130,8 @@ public class User {
         return websiteName;
     }
 
-    public void setWebsiteName(String websiteName) {
-        this.websiteName.setWebpageName(websiteName);
+    public void setWebsiteName(WebpageName websiteName) {
+        this.websiteName = websiteName;
     }
 
     public void setPassword(String password) {

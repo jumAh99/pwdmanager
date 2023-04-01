@@ -5,9 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import com.passwordmanager.domain.User;
-import com.passwordmanager.domain.valueObjects.Password;
-import com.passwordmanager.domain.valueObjects.Username;
-import com.passwordmanager.domain.valueObjects.WebpageName;
+import com.passwordmanager.domain.vo.Password;
+import com.passwordmanager.domain.vo.WebpageName;
 
 public class UserTest {
     @Test
@@ -18,14 +17,13 @@ public class UserTest {
 
     @Test
     public void itCreatesUserByName() {
-        Username username = new Username("jumma");
-        User user = new User(username);
+        User user = new User("jumma");
         assertNotNull(user);
     }
 
     @Test
     public void itCreatesUserByPassword() {
-        Password p = new Password("password12309");
+        Password p = new Password("Password12@");
         User user = new User(p);
         assertNotNull(user);
     }

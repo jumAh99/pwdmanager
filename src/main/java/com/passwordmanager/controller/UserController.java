@@ -19,7 +19,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 
 import com.passwordmanager.domain.User;
-import com.passwordmanager.repository.PwdManagerRepository;
+import com.passwordmanager.repositories.PwdManagerRepository;
 
 @Controller
 public class UserController {
@@ -30,14 +30,15 @@ public class UserController {
     public String getAll(Model model, @Param("keyword") String keyword) {
         try {
             List<User> users = new ArrayList<User>();
-
+            boolean isAdmin = false;
             if (keyword == null) {
                 repository.findAll().forEach(users::add);
             } else {
                 if (keyword.equals("adminpassword")) {
-                    return "redirect:/users?adminMode";
+                    isAdmin = true;
+                    return "redirect:/users?" + isAdmin;
                 } else {
-                    repository.findByNameContainingIgnoreCase(keyword).forEach(users::add);
+                    repository.findByUsername(keyword).forEach(users::add);
                     model.addAttribute("keyword", keyword);
                 }
             }
@@ -84,7 +85,7 @@ public class UserController {
             User user = repository.getReferenceById(id);
 
             model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Edit User (ID: " + user.getName() + ")");
+            model.addAttribute("pageTitle", "Edit User (ID: " + user.getUsername() + ")");
 
             return "user_form";
         } catch (Exception e) {
@@ -97,7 +98,9 @@ public class UserController {
     @GetMapping("/users/copy/{id}")
     public String copyToClipBoard(@PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes) {
-        StringSelection stringSelection = new StringSelection(repository.getReferenceById(id).getOriginalPassword());
+        StringSelection stringSelection = new StringSelection(
+                "username: " + repository.getReferenceById(id).getUsername() + " password: "
+                        + repository.getReferenceById(id).getOriginalPassword());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
         redirectAttributes.addFlashAttribute("message",

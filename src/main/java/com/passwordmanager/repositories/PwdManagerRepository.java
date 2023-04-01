@@ -1,4 +1,4 @@
-package com.passwordmanager.repository;
+package com.passwordmanager.repositories;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import com.passwordmanager.domain.User;
 
 @Repository
 public interface PwdManagerRepository extends JpaRepository<User, Integer> {
-    List<User> findByNameContainingIgnoreCase(String keyword);
+    List<User> findByUsername(String keyword);
 }
